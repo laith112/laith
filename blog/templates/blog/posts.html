@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+<!-- title -->
+{% block title %}Flask Blog - Recent Posts{% endblock %}
+
+<!-- content block -->
+{% block main %}
+
+<!-- posts header -->
+<div class="row my-5 justify-content-between px-5">
+    <h3>
+    Recent Posts
+    </h3>
+  {%if session['uid'] %}
+    <a class="btn btn-primary text-white">Add Post</a>
+  {%endif%}
+</div>
+
+<div class="row">
+
+  {% for post in posts %}
+  <div class="col-lg-4 col-md-6 col-sm-12">
+
+    <!-- post card -->
+    <div class="card bg-light mb-3">
+
+      <!-- card header -->
+      <div class="card-header">
+        <h5 class="card-title">{{ post['title'] }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted"> by <a href="{{url_for('user.view_user',id=post['author_id'])}}"> {{post['first_name'] | title}} {{post['last_name'] | title}}</a></h6>
+      </div>
+
+      <!-- card body -->
+      <div class="card-body">
+        <p class="card-text">{{ post['body'] |truncate(140, True)  }}</p>
+        <p class="card-text">{{ post['created'] }}</p>
+        <p >{{ post['id'] }}</p>
+        <a href="{{url_for('blog.view_post' , id=post['id'])}}" class="card-link">Read more</a>
+        <a href="#" class="card-link">More by this author</a>
+      </div>
+        <!-- <div>
+          <h1>{{ post['title'] }}</h1>
+          <div class="about">
+            on 
+        </div>
+      <p class="body"></p> -->
+      </div>
+  </div>
+{%endfor%}
+</div>
+{% endblock %}
